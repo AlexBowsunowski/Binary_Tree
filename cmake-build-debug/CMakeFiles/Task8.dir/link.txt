@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/Task8.dir/main.cpp.o CMakeFiles/Task8.dir/tree.cpp.o -o Task8 
