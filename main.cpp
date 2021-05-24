@@ -2,7 +2,8 @@
 #include "tree.h"
 
 int main() {
-    std::cout<<"0 count_elem- generate random tree\n";
+    srand(time(NULL));
+    std::cout<<"0 count_elem generate random tree\n";
     tree* Tree = NULL;
     int count;
     std::cin>>count;
@@ -11,6 +12,8 @@ int main() {
         int num = rand() % 41 - 20;
         Tree = add_node(Tree, num, weight);
     }
+
+
     show(Tree, 3);
 
     console_command();
@@ -32,12 +35,12 @@ int main() {
                 show(Tree, 3);
                 break;
             case 4:
-                a = max_element_with_positive_weight(Tree);
-                std::cout<<a<<"\n";
+                zero_way(Tree);
                 break;
             default:
                 break;
         }
+
         console_command();
         std::cin>>check;
     }

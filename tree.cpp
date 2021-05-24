@@ -61,30 +61,49 @@ void show(tree *t, int n) {
     }
 }
 
-int max_element_with_positive_weight(tree* Tree){
-    if (Tree){
-        if(Tree->weigth == 1) {
-            if (Tree->right)
-                return std::max(Tree->id, max_element_with_positive_weight(Tree->right));
-            else
-                return Tree->id;
-        }else if(Tree->weigth != 1 && !Tree->right && !Tree->left){
-            return -99999999;
-        }else if(Tree->left && Tree->right){
-            return std::max(max_element_with_positive_weight(Tree->left), max_element_with_positive_weight(Tree->right));
-        }else if(Tree->left){
-            return max_element_with_positive_weight(Tree->left);
-        }else if(Tree->right){
-            return max_element_with_positive_weight(Tree->right);
+int dfs(tree* t, int curr_weight){
+    int id = -1;
+    if(curr_weight == 0){
+        return t->id;
+    }else{
+        if(t){
+           if(t->left && t->left->weigth != 0){
+               id = std::max(dfs(t->left, curr_weight + t->left->weigth),-1);
+           }if(t->right && t->right->weigth != 0){
+               id = std::max(dfs(t->right, curr_weight + t->right->weigth),-1);
+           }
         }
     }
+    return id;
 
+}
+
+
+
+
+void zero_way(tree* t){
+    if (t->weigth == 0){
+        std::cout<<"Nothing\n";
+        return;
+    }
+    int id1 = dfs(t, t->weigth);
+    if (id1 == -1) {
+        std::cout<<"Nothing\n";
+        return;
+    }
+    tree* cur = t, *par;
+    while(cur->id != id1){
+        par = cur;
+        std::cout<<par->id<<"-";
+        cur = id1 <= par->id ? par->left: par->right;
+    }
+    std::cout<<cur->id<<"\n";
 }
 
 void console_command(){
     std::cout<<"1 el weight - add element\n";
     std::cout<<"2 el - delete element\n";
     std::cout<<"3 - show\n";
-    std::cout<<"4 - max element with positive weight\n";
+    std::cout<<"4 - find zero way\n";
     std::cout<<"5 - cancel\n";
 }
