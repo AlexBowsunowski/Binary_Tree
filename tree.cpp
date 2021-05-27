@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#define MAXN 9999
 
 tree* add_node(tree* Tree, int element, int weight){
     tree *cur = Tree, *par;
@@ -61,43 +62,33 @@ void show(tree *t, int n) {
     }
 }
 
-int dfs(tree* t, int curr_weight){
-    int id = -1;
-    if(curr_weight == 0){
-        return t->id;
-    }else{
-        if(t){
-           if(t->left && t->left->weigth != 0){
-               id = std::max(dfs(t->left, curr_weight + t->left->weigth),-1);
-           }if(t->right && t->right->weigth != 0){
-               id = std::max(dfs(t->right, curr_weight + t->right->weigth),-1);
-           }
+void dfs(tree* t, int curr_weight, int* ans, int cur_ind){
+
+    if(curr_weight == 0 && !t->left && !t->right){
+        for(int i = 0; i < cur_ind; ++i){
+            std::cout<<ans[i]<<"->";
+        }
+        std::cout<<ans[cur_ind]<<"\n";
+    }else if(t->left || t->right){
+        if(t->left && t->left->weigth != 0){
+            ans[cur_ind+1] = t->left->id;
+            dfs(t->left, curr_weight+t->left->weigth, ans, cur_ind+1);
+        }
+        if(t->right && t->right->weigth != 0){
+            ans[cur_ind+1] = t->right->id;
+            dfs(t->right, curr_weight+t->right->weigth, ans, cur_ind+1);
         }
     }
-    return id;
 
 }
 
-
-
-
 void zero_way(tree* t){
     if (t->weigth == 0){
-        std::cout<<"Nothing\n";
         return;
     }
-    int id1 = dfs(t, t->weigth);
-    if (id1 == -1) {
-        std::cout<<"Nothing\n";
-        return;
-    }
-    tree* cur = t, *par;
-    while(cur->id != id1){
-        par = cur;
-        std::cout<<par->id<<"-";
-        cur = id1 <= par->id ? par->left: par->right;
-    }
-    std::cout<<cur->id<<"\n";
+    int* ans = (int*)malloc(sizeof(int)*MAXN);
+    ans[0] = t->id;
+    dfs(t, t->weigth, ans, 0);
 }
 
 void console_command(){

@@ -6,11 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/aleksandr/Documents/Semestr2_prog/Task8/main.cpp
-iostream
--
+/home/aleksandr/Documents/Semestr2_prog/Task8/tree.cpp
 tree.h
 /home/aleksandr/Documents/Semestr2_prog/Task8/tree.h
+iostream
+-
+iomanip
+-
+algorithm
+-
 
 /home/aleksandr/Documents/Semestr2_prog/Task8/tree.h
 
